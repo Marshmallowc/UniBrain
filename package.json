@@ -1,0 +1,30 @@
+{
+  "name": "unibrain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marshmallowc/UniBrain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Marshmallowc/UniBrain/issues"
+  },
+  "homepage": "https://github.com/Marshmallowc/UniBrain#readme",
+  "dependencies": {
+    "@prisma/client": "^7.3.0",
+    "chromadb": "^3.2.2",
+    "dotenv": "^17.2.3",
+    "openai": "^6.17.0"
+  },
+  "devDependencies": {
+    "prisma": "^7.3.0"
+  }
+}

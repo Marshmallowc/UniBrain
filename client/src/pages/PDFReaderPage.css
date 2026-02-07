@@ -1,0 +1,168 @@
+.pdf-reader-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-gradient);
+  position: relative;
+  overflow: hidden;
+}
+
+.pdf-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--safe-header-height);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: env(safe-area-inset-top) 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.pdf-header-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.pdf-back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pdf-back-btn:active {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.pdf-title {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Outfit', sans-serif;
+}
+
+.pdf-viewport {
+  flex: 1;
+  overflow: auto;
+  padding-top: calc(var(--safe-header-height) + 20px);
+  padding-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  scroll-behavior: smooth;
+}
+
+.pdf-document-wrapper {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* 底部悬浮控制栏 - 极客玻璃拟态 */
+.pdf-controls {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 1000;
+  transition: all 0.3s;
+}
+
+.pdf-control-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.2s;
+}
+
+.pdf-control-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.9);
+}
+
+.pdf-page-info {
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 70px;
+  text-align: center;
+  letter-spacing: 0.05em;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* 翻页提示浮窗 */
+.page-turner-bubble {
+  --background: var(--primary-color);
+  --size: 64px;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4) !important;
+}
+
+.page-turner-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  line-height: 1;
+}
+
+.page-turner-icon {
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+.page-turner-text {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* 骨架屏与错误状态增强 */
+.pdf-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
+  color: var(--text-muted);
+  gap: 16px;
+}
+
+.pdf-loading .adm-loading {
+  --size: 40px;
+}

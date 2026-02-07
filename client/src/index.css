@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* 规范级 Academic Blue 色调 - 进一步优化对比度 */
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: #eff6ff;
+
+  /* 优化背景：采用从深到浅的渐变，增强白色卡片的“悬浮感”和“立体感” */
+  /* 使用稍深的蓝紫色调作为基底，让浅色卡片更突出 */
+  --bg-gradient: linear-gradient(160deg, #eef2ff 0%, #dbeafe 50%, #bfdbfe 100%);
+
+  /* 文本系统：使用极深的海军蓝确保最高的阅读清晰度 */
+  --text-main: #020617;
+  --text-muted: #475569;
+
+  /* 玻璃材质：增加边框亮度和模糊度，提升对比度 */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --ai-bubble-bg: rgba(255, 255, 255, 0.95);
+  --user-bubble-bg: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+
+  /* 阴影等级：增加阴影浓度，强化层次感 */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 20px 50px -12px rgba(0, 0, 0, 0.15);
+  --shadow-blue: 0 8px 20px rgba(37, 99, 235, 0.2);
+  --safe-header-height: calc(64px + env(safe-area-inset-top));
+  --safe-tabbar-height: calc(52px + env(safe-area-inset-bottom));
+}
+
+/* 全局消隐护卫 - 沉浸式核心层 */
+.top-mask-guard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--safe-header-height);
+  background: rgba(238, 242, 255, 0.4);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 900;
+  /* 降低一点，确保 UI 操作层在它上面 */
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  pointer-events: none;
+}
+
+/* 全白无感消隐 - 底部 (基础版，适用于非对话页) */
+.bottom-mask-guard {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--safe-tabbar-height);
+  background: linear-gradient(to top,
+      rgba(191, 219, 254, 0.4) 0%,
+      rgba(191, 219, 254, 0.2) 50%,
+      transparent 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 800;
+  -webkit-mask-image: linear-gradient(to top, black 50%, transparent 100%);
+  mask-image: linear-gradient(to top, black 50%, transparent 100%);
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 强化版消隐：仅在 Chat 页面激活，覆盖输入框区域 */
+.bottom-mask-guard.is-chat {
+  height: 240px;
+  background: linear-gradient(to top,
+      rgba(191, 219, 254, 0.6) 0%,
+      rgba(191, 219, 254, 0.3) 40%,
+      transparent 100%);
+  backdrop-filter: blur(45px);
+  -webkit-backdrop-filter: blur(45px);
+  -webkit-mask-image: linear-gradient(to top, black 65%, transparent 100%);
+  mask-image: linear-gradient(to top, black 65%, transparent 100%);
+}
+
+/* 全局沉浸式 Header 规范 */
+.header-actions {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  /* 必须高于 guard */
+  margin-top: env(safe-area-inset-top);
+}
+
+.header-title {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-main);
+  opacity: 0.8;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+}
+
+.action-btn {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.action-btn:active {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  min-height: 100vh;
+  letter-spacing: -0.01em;
+}
+
+/* 全局滚动条隐藏 */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* 按钮全局优化 */
+.adm-button-primary {
+  --background-color: var(--primary-color) !important;
+  border-radius: 16px !important;
+  font-weight: 700 !important;
+  box-shadow: var(--shadow-blue) !important;
+  border: none !important;
+}
+
+.adm-nav-bar {
+  --background-color: transparent !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}

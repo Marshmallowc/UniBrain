@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 文档表：存 PDF 文件的信息
+model Document {
+  id       String   @id @default(uuid())
+  fileName String // 文件名：比如“学生手册.pdf”
+  fileUrl  String? // 文件存放地址，以后做高亮显示的时候可以用到
+  status   String   @default("processing") // processing: 处理中, success: 处理完成, failed: 处理失败
+  createAt DateTime @default(now())
+  chunks   Chunk[] // 关联的切片
+}
+
+// 切片表：存每一段话的信息
+model Chunk {
+  id         String   @id @default(uuid())
+  content    String   @db.Text // 文本内容
+  pageNumber Int // 关键：记录是第几页
+  vectorId   String // 对应 Chromadb 中的 ID
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id])
+}

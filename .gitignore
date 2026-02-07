@@ -1,30 +1,30 @@
-# 1. 依赖包 (绝对不能传)
+# 1. 依赖包
 node_modules/
 dist/
 build/
+.next/
 
-# 2. 环境密钥 (最重要！保护你的钱袋子)
+# 2. 环境密钥
 .env
 .env.local
 .env.*.local
+!.env.example
 
-# 3. Docker 产生的数据 (让仓库保持干净)
-# 我们在 docker-compose 里挂载的数据目录
+# 3. 运行时数据与文件
 data/
 mysql_data/
 chroma_data/
+server/uploads/
+server/prisma/dev.db
+server/prisma/dev.db-journal
 
 # 4. 日志文件
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-logs/
 *.log
+logs/
 
 # 5. 系统与编辑器缓存
 .DS_Store
 .vscode/
 .idea/
 *.suo
-*.ntvs*
-*.njsproj

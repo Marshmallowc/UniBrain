@@ -1,0 +1,316 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  background: transparent;
+}
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  /*
+     边距规范：
+     使用全局定义的安全高度，确保消隐效果完美覆盖
+  */
+  padding: var(--safe-header-height) 18px 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+/* 落地页欢迎态： Minimalist 风格 */
+.welcome-splash {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  padding: 0 40px;
+  animation: splashFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.splash-title {
+  font-size: 44px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  /* 高级灰：采用深板岩色到石墨色的微妙纵向渐变 */
+  background: linear-gradient(to bottom, #475569 0%, #1e293b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.04em;
+  font-family: 'Outfit', sans-serif;
+}
+
+.splash-subtitle {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+@keyframes splashFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* 顶部自定义悬浮操作栏 (元宝/ChatGPT风格) */
+.header-actions {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  /* 适配刘海屏状态栏 */
+  margin-top: env(safe-area-inset-top);
+}
+
+.header-title {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-main);
+  opacity: 0.8;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+}
+
+.action-btn {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.action-btn:active {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.message-item {
+  display: flex;
+  flex-direction: column;
+  /* 纵向排列消息 blocks */
+  width: 100%;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-user {
+  align-items: flex-end;
+  /* 用户消息靠右 */
+}
+
+.message-ai {
+  align-items: flex-start;
+  /* AI消息靠左 */
+}
+
+.bubble {
+  padding: 0 16px;
+  border-radius: 20px;
+  font-size: 16px;
+  line-height: 1.65;
+  position: relative;
+  word-break: break-word;
+  max-width: 85%;
+}
+
+.message-user .bubble {
+  background: var(--user-bubble-bg);
+  color: white;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+  margin-bottom: 24px;
+}
+
+/* AI 消息扁平化：去除所有气泡特征 */
+.message-ai .bubble {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: var(--text-main);
+  padding: 0;
+  /* 移除内衬，直接展示内容 */
+  border: none;
+  box-shadow: none;
+  max-width: 100%;
+  margin-bottom: 40px;
+  /* 为下一轮对话留出较大的呼吸感 */
+}
+
+/* AI 操作栏样式 */
+.ai-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* 两端对齐 */
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.action-icons-left {
+  display: flex;
+  gap: 12px;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 18px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.action-item:active {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--primary-color);
+  transform: scale(0.9);
+}
+
+/* 胶囊 Source 按钮 */
+.source-capsule {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-light);
+  color: var(--primary-color);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 800;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(37, 99, 235, 0.1);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.source-capsule:active {
+  transform: scale(0.92);
+  background: #dbeafe;
+}
+
+/* 引用项背景微蓝 */
+.source-card {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: rgba(37, 99, 235, 0.04);
+  border-radius: 12px;
+  border: 1px solid rgba(37, 99, 235, 0.08);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.source-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.source-info {
+  font-size: 13px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+/* 沉浸式输入区域 */
+.input-area {
+  position: absolute;
+  bottom: 100px;
+  /* 进一步上提，增强浮空感 */
+  left: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  padding: 10px 10px 10px 24px;
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 15px 45px rgba(15, 23, 42, 0.1);
+  z-index: 900;
+}
+
+.input-box {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: var(--text-main);
+  outline: none;
+  font-weight: 500;
+}
+
+.send-btn-wrapper {
+  width: 44px;
+  height: 44px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.send-btn-wrapper:active {
+  transform: scale(0.85);
+}
+
+.send-btn-wrapper.loading {
+  background: #f1f5f9;
+  color: #cbd5e1;
+  box-shadow: none;
+}
